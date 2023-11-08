@@ -17,6 +17,7 @@ package basic_test
 import (
 	"testing"
 
+	"github.com/google/go-cmp/cmp"
 	"github.com/google/yamlfmt"
 	"github.com/google/yamlfmt/formatters/basic"
 )
@@ -115,7 +116,7 @@ func TestNewWithConfigRetainsDefaultValues(t *testing.T) {
 			if !ok {
 				t.Fatal("should have been able to cast to basic formatter")
 			}
-			if *basicFormatter.Config != tc.expectedConfig {
+			if s := cmp.Diff(*basicFormatter.Config, tc.expectedConfig); s != "" {
 				t.Fatalf("configs differed:\nexpected: %v\ngot: %v", *basicFormatter.Config, tc.expectedConfig)
 			}
 		})
